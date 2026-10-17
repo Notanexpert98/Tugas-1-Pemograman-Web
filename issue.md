@@ -87,41 +87,121 @@ Jam 18:00 – 04:59  → "Selamat Malam"
 
 | Komponen                | Detail                                                                                             |
 | ----------------------- | -------------------------------------------------------------------------------------------------- |
-| **Input**               | Nomor Delivery Order (DO)                                                                          |
+| **Input**               | Nomor Pengiriman (key dari object `dataTracking`, contoh: `2023005678`)                            |
 | **Tombol**              | "Cari"                                                                                             |
-| **Validasi**            | Jika nomor DO tidak ditemukan, tampilkan pesan bahwa data tidak ditemukan                           |
+| **Validasi**            | Jika nomor tidak ditemukan di object `dataTracking`, tampilkan pesan bahwa data tidak ditemukan     |
 
 **Ketika tombol "Cari" ditekan dan data ditemukan, tampilkan:**
 
-| Informasi              | Keterangan                                                                                          |
-| ---------------------- | --------------------------------------------------------------------------------------------------- |
-| Nama Mahasiswa         | Nama penerima paket                                                                                 |
-| Status Pengiriman      | Disimulasikan dengan **progress bar**, **warna indikator**, **tabel**, atau **list** (bebas kreatif)|
-| Detail Ekspedisi       | Nama jasa ekspedisi yang digunakan                                                                  |
-| Tanggal Kirim          | Tanggal pengiriman paket                                                                            |
-| Jenis Paket            | Jenis/kategori paket yang dikirim                                                                   |
-| Total Pembayaran       | Biaya total pengiriman (format Rupiah)                                                              |
+**A. Informasi Ringkasan Pengiriman:**
+
+| Field di `data.js`     | Label Tampilan       | Keterangan                                                              |
+| ---------------------- | -------------------- | ----------------------------------------------------------------------- |
+| `nomorDO`              | Nomor DO             | Nomor Delivery Order                                                    |
+| `nama`                 | Nama Penerima        | Nama mahasiswa penerima paket                                           |
+| `status`               | Status Pengiriman    | Status saat ini: `"Diproses"`, `"Dikirim"`, `"Diterima"`                |
+| `ekspedisi`            | Ekspedisi            | Nama jasa ekspedisi (contoh: `"Pos Indonesia"`, `"JNE Express"`)        |
+| `tanggalKirim`         | Tanggal Kirim        | Format `YYYY-MM-DD` (contoh: `"2025-08-25"`)                           |
+| `paket`                | Kode Paket           | Kode unik paket pengiriman (contoh: `"0UPBJJBDG"`)                     |
+| `total`                | Total Pembayaran     | Sudah dalam format string Rupiah (contoh: `"Rp 220.000"`)              |
+
+**B. Riwayat Perjalanan (Timeline):**
+
+Setiap entry tracking memiliki array `perjalanan` yang berisi kronologi pengiriman secara detail. Array ini harus ditampilkan sebagai **timeline / stepper vertikal** yang menunjukkan setiap tahap perjalanan paket.
+
+| Field di `perjalanan[]` | Label         | Keterangan                                                             |
+| ----------------------- | ------------- | ---------------------------------------------------------------------- |
+| `waktu`                 | Waktu         | Format datetime `"YYYY-MM-DD HH:mm:ss"` (contoh: `"2025-08-25 10:12:20"`) |
+| `keterangan`            | Keterangan    | Deskripsi status/lokasi paket saat itu                                 |
 
 **Contoh data referensi di `data.js`:**
+
+> **Penting:** Format data tracking menggunakan **object map** (bukan array), di mana key adalah nomor pengiriman dan value adalah object detail pengiriman.
+
 ```js
-const dataTracking = [
-  {
-    nomorDO: "DO-2024-001",
-    namaMahasiswa: "Budi Santoso",
-    statusPengiriman: "Dalam Perjalanan",  // "Diproses", "Dalam Perjalanan", "Diterima"
-    progressPersen: 60,
-    detailEkspedisi: "JNE Express",
-    tanggalKirim: "2024-10-10",
-    jenisPaket: "Buku Cetak Reguler",
-    totalPembayaran: 150000
+const dataTracking = {
+  "2023001234": {
+    nomorDO: "2023001234",
+    nama: "Budi Santoso",
+    status: "Diterima",
+    ekspedisi: "JNE Express",
+    tanggalKirim: "2025-08-20",
+    paket: "0UPBJJJKT",
+    total: "Rp 150.000",
+    perjalanan: [
+      {
+        waktu: "2025-08-20 09:00:00",
+        keterangan: "Penerimaan di Loket: TANGERANG SELATAN. Pengirim: Universitas Terbuka"
+      },
+      {
+        waktu: "2025-08-20 14:30:00",
+        keterangan: "Tiba di Hub: TANGERANG SELATAN"
+      },
+      {
+        waktu: "2025-08-21 08:15:00",
+        keterangan: "Diteruskan ke Kantor Kota Jakarta"
+      },
+      {
+        waktu: "2025-08-21 16:45:00",
+        keterangan: "Tiba di Hub: Kota JAKARTA SELATAN"
+      },
+      {
+        waktu: "2025-08-22 10:30:00",
+        keterangan: "Proses antar ke Ciputat"
+      },
+      {
+        waktu: "2025-08-22 15:00:00",
+        keterangan: "Selesai Antar. Penerima: Budi Santoso"
+      }
+    ]
   },
+  "2023005678": {
+    nomorDO: "2023001234",
+    nama: "Agus Pranoto",
+    status: "Dikirim",
+    ekspedisi: "Pos Indonesia",
+    tanggalKirim: "2025-08-25",
+    paket: "0UPBJJBDG",
+    total: "Rp 220.000",
+    perjalanan: [
+      {
+        waktu: "2025-08-25 10:12:20",
+        keterangan: "Penerimaan di Loket: TANGERANG SELATAN. Pengirim: Universitas Terbuka"
+      },
+      {
+        waktu: "2025-08-25 14:07:56",
+        keterangan: "Tiba di Hub: TANGERANG SELATAN"
+      },
+      {
+        waktu: "2025-08-25 16:30:10",
+        keterangan: "Diteruskan ke Kantor Kota Bandung"
+      },
+      {
+        waktu: "2025-08-26 12:15:33",
+        keterangan: "Tiba di Hub: Kota BANDUNG"
+      },
+      {
+        waktu: "2025-08-26 15:06:12",
+        keterangan: "Proses antar ke Cimahi"
+      },
+      {
+        waktu: "2025-08-26 20:00:00",
+        keterangan: "Selesai Antar. Penerima: Agus Pranoto"
+      }
+    ]
+  }
   // ... tambahan data lainnya
-];
+};
 ```
 
-**Catatan Kreatifitas:**
-- Status pengiriman bisa ditampilkan sebagai **progress bar berwarna** (merah → kuning → hijau).
-- Bisa juga menggunakan **stepper/timeline** (Diproses → Dikirim → Dalam Perjalanan → Diterima).
+**Catatan Tampilan Tracking:**
+
+- **Status pengiriman** ditampilkan dengan **indikator warna**:
+  - 🔴 `Diproses` — Merah/Abu-abu
+  - 🟡 `Dikirim` — Kuning/Oranye (sedang dalam perjalanan)
+  - 🟢 `Diterima` — Hijau (selesai)
+- **Riwayat perjalanan (`perjalanan[]`)** ditampilkan sebagai **timeline vertikal / stepper** dengan urutan kronologis dari atas ke bawah, menampilkan waktu dan keterangan setiap tahap.
+- **Pencarian** dilakukan dengan mencocokkan input user terhadap key object `dataTracking` (contoh: user mengetik `2023005678`, lalu sistem menampilkan `dataTracking["2023005678"]`).
 
 ---
 
@@ -172,7 +252,7 @@ const dataUsers = [ ... ];
 const dataBahanAjar = [ ... ];
 
 // ===== DATA TRACKING PENGIRIMAN =====
-const dataTracking = [ ... ];
+const dataTracking = { ... };
 
 // ===== DATA HISTORI TRANSAKSI =====
 const dataHistoriTransaksi = [ ... ];
