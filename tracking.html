@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracking Pengiriman - Sistem Bahan Ajar UT</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>📚 Sistem Bahan Ajar UT</h1>
+    <div class="user-info">
+      <span id="navUserName">User</span>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="content-container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h2>🚚 Tracking Pengiriman (Delivery Order)</h2>
+      <a href="dashboard.html" class="btn-back">← Kembali ke Dashboard</a>
+    </div>
+
+    <!-- Kotak Pencarian DO -->
+    <div class="search-box">
+      <input type="text" id="inputNomorDO" placeholder="Masukkan nomor pengiriman / DO (contoh: 2023001234, 2023005678, 2023009012)">
+      <button class="btn-search" onclick="cariTracking()">🔍 Cari</button>
+    </div>
+
+    <!-- Alert jika data tidak ditemukan -->
+    <div id="alertNotFound" class="alert alert-error hidden">
+      <span>⚠️</span>
+      <span>Nomor pengiriman tidak ditemukan dalam sistem. Pastikan nomor yang dimasukkan benar.</span>
+    </div>
+
+    <!-- Hasil Tracking (Tampil setelah pencarian berhasil) -->
+    <div id="trackingResult" class="tracking-result hidden">
+      <h3 class="section-title">📦 Ringkasan Pengiriman</h3>
+      <div class="tracking-info">
+        <div class="info-item">
+          <div class="label">Nomor DO</div>
+          <div class="value" id="resultNomorDO">-</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Nama Penerima</div>
+          <div class="value" id="resultNama">-</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Status Pengiriman</div>
+          <div class="value" id="resultStatus">-</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Ekspedisi</div>
+          <div class="value" id="resultEkspedisi">-</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Tanggal Kirim</div>
+          <div class="value" id="resultTanggal">-</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Kode Paket</div>
+          <div class="value" id="resultPaket">-</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Total Pembayaran</div>
+          <div class="value" id="resultTotal">-</div>
+        </div>
+      </div>
+
+      <h3 class="section-title">📍 Riwayat Perjalanan (Timeline)</h3>
+      <div class="timeline" id="timelineContainer"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/tracking.js"></script>
+</body>
+</html>

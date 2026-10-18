@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informasi Stok Bahan Ajar - Sistem Bahan Ajar UT</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>📚 Sistem Bahan Ajar UT</h1>
+    <div class="user-info">
+      <span id="navUserName">User</span>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="content-container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h2>📦 Informasi Stok Bahan Ajar</h2>
+      <a href="dashboard.html" class="btn-back">← Kembali ke Dashboard</a>
+    </div>
+
+    <!-- Form Tambah Stok Baru -->
+    <div class="form-tambah" id="formTambah">
+      <div>
+        <label for="inputKodeLokasi">Kode Lokasi</label>
+        <input type="text" id="inputKodeLokasi" placeholder="Contoh: 0JKT01">
+      </div>
+      <div>
+        <label for="inputKodeBarang">Kode Barang</label>
+        <input type="text" id="inputKodeBarang" placeholder="Contoh: MKDU4110">
+      </div>
+      <div>
+        <label for="inputNamaBarang">Nama Bahan Ajar</label>
+        <input type="text" id="inputNamaBarang" placeholder="Nama mata kuliah / bahan ajar">
+      </div>
+      <div>
+        <label for="inputJenisBarang">Jenis</label>
+        <select id="inputJenisBarang">
+          <option value="BMP">BMP</option>
+          <option value="Modul">Modul</option>
+          <option value="Buku">Buku</option>
+          <option value="Diktat">Diktat</option>
+        </select>
+      </div>
+      <div>
+        <label for="inputEdisi">Edisi</label>
+        <input type="text" id="inputEdisi" placeholder="Contoh: 1, 2">
+      </div>
+      <div>
+        <label for="inputStok">Stok</label>
+        <input type="number" id="inputStok" placeholder="Jumlah stok" min="0">
+      </div>
+      <div>
+        <label>&nbsp;</label>
+        <button class="btn-tambah" onclick="tambahStok()">+ Tambah Stok</button>
+      </div>
+    </div>
+
+    <!-- Alert -->
+    <div id="stokAlert" class="alert hidden">
+      <span id="stokAlertIcon"></span>
+      <span id="stokAlertMessage"></span>
+    </div>
+
+    <!-- Tabel Stok Bahan Ajar -->
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Kode Lokasi</th>
+            <th>Kode Barang</th>
+            <th>Nama Bahan Ajar</th>
+            <th>Jenis</th>
+            <th>Edisi</th>
+            <th>Stok Tersedia</th>
+          </tr>
+        </thead>
+        <tbody id="stokTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/stok.js"></script>
+</body>
+</html>

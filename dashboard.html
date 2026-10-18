@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Sistem Bahan Ajar UT</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>📚 Sistem Bahan Ajar UT</h1>
+    <div class="user-info">
+      <span id="navUserName">User</span>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Section Menu Utama -->
+  <div id="sectionMenu" class="content-container">
+    <!-- Greeting Dinamis -->
+    <div class="greeting-section">
+      <h2 id="greetingText">Selamat Datang! 👋</h2>
+      <p>Selamat datang di Sistem Distribusi dan Monitoring Bahan Ajar Universitas Terbuka.</p>
+    </div>
+
+    <!-- Menu Grid Navigasi -->
+    <div class="menu-grid">
+      <a href="stok.html" class="menu-card">
+        <div class="menu-icon">📦</div>
+        <h3>Informasi Bahan Ajar</h3>
+        <p>Lihat katalog dan kelola ketersediaan stok bahan ajar</p>
+      </a>
+
+      <a href="tracking.html" class="menu-card">
+        <div class="menu-icon">🚚</div>
+        <h3>Tracking Pengiriman</h3>
+        <p>Lacak status pengiriman dan riwayat perjalanan DO</p>
+      </a>
+
+      <a href="javascript:void(0)" onclick="tampilkanSection('sectionMonitoring')" class="menu-card">
+        <div class="menu-icon">📊</div>
+        <h3>Monitoring Progress DO</h3>
+        <p>Pantau persentase progres pengiriman paket mahasiswa</p>
+      </a>
+
+      <a href="javascript:void(0)" onclick="tampilkanSection('sectionRekap')" class="menu-card">
+        <div class="menu-icon">📑</div>
+        <h3>Rekap Bahan Ajar</h3>
+        <p>Rekapitulasi total pengiriman, penerimaan, dan sisa stok</p>
+      </a>
+
+      <a href="javascript:void(0)" onclick="tampilkanSection('sectionHistori')" class="menu-card">
+        <div class="menu-icon">🕒</div>
+        <h3>Histori Transaksi</h3>
+        <p>Daftar riwayat transaksi pengiriman bahan ajar</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section Laporan: Monitoring Progress DO -->
+  <div id="sectionMonitoring" class="content-container hidden">
+    <div class="page-header">
+      <h2>📊 Monitoring Progress Delivery Order (DO)</h2>
+      <a href="javascript:void(0)" onclick="tampilkanSection('sectionMenu')" class="btn-back">← Kembali ke Menu Utama</a>
+    </div>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Nomor DO</th>
+            <th>Nama Mahasiswa</th>
+            <th>Kota Tujuan</th>
+            <th>Status</th>
+            <th>Progress Pengiriman</th>
+          </tr>
+        </thead>
+        <tbody id="monitoringTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section Laporan: Rekap Bahan Ajar -->
+  <div id="sectionRekap" class="content-container hidden">
+    <div class="page-header">
+      <h2>📑 Laporan Rekapitulasi Bahan Ajar</h2>
+      <a href="javascript:void(0)" onclick="tampilkanSection('sectionMenu')" class="btn-back">← Kembali ke Menu Utama</a>
+    </div>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Kode</th>
+            <th>Nama Bahan Ajar</th>
+            <th>Total Dikirim</th>
+            <th>Total Diterima</th>
+            <th>Sisa Stok</th>
+          </tr>
+        </thead>
+        <tbody id="rekapTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section Laporan: Histori Transaksi -->
+  <div id="sectionHistori" class="content-container hidden">
+    <div class="page-header">
+      <h2>🕒 Histori Transaksi Bahan Ajar</h2>
+      <a href="javascript:void(0)" onclick="tampilkanSection('sectionMenu')" class="btn-back">← Kembali ke Menu Utama</a>
+    </div>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Nomor DO</th>
+            <th>Penerima</th>
+            <th>Bahan Ajar</th>
+            <th>Jumlah</th>
+            <th>Total Biaya</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="historiTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
